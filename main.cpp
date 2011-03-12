@@ -30,6 +30,7 @@ bool openFILE(ifstream& file,string filename){
   if(file){
     check = true;
   }
+  file.close();
   return check;
 }
 NODES *preLoad(ifstream& file,string newfile){
@@ -39,8 +40,10 @@ NODES *preLoad(ifstream& file,string newfile){
   string lines;
   
   file.open(newfile.c_str(),ios::in);
+  
   while(!file.eof()){
-    file >> lines;
+
+    getline(file,lines);
     newNODE = new NODES;
     newNODE->line = lines;
     newNODE->front = 0;
