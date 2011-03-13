@@ -16,7 +16,6 @@ int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current);
 void driveCommands(NODES *mainNODE);
 void display();
-void delInput(NODES *mainNODE);
 NODES *deleteLines(NODES *mainNODE,int from);
 
 int main(int argc, char *argv[])
@@ -77,7 +76,8 @@ void driveCommands(NODES *mainNODE){
   string input;
   bool quit = true;
   int total = 0;
-  int num = 0;  
+  int num = 0; 
+  int numTwo = 0; 
 
   mainNODE = moveTo(mainNODE,1);
 
@@ -101,7 +101,26 @@ void driveCommands(NODES *mainNODE){
       mainNODE = moveTo(mainNODE,num);
     }
     if(input == "d" || input == "D"){    
-      delInput(mainNODE);
+    
+      num = cin.get();
+      if(num == '\n'){
+	num = locatePosition(mainNODE) + 1;
+	numTwo = num + 1;
+      } 
+      else{
+	cin >> num;
+	numTwo = cin.get();
+	if(numTwo != '\n'){
+	  cin >> numTwo;
+	}
+	else{
+	  numTwo = num + 1;
+	}
+      }
+      while(num != numTwo){
+	mainNODE = deleteLines(mainNODE,num);
+	num++;
+      }
     }
     if(input == "q" || input == "Q"){
       quit = false;
@@ -158,27 +177,6 @@ NODES *moveTo(NODES *mainNODE,int current){
     driveCommands(mainNODE);
   }
   return mainNODE;
-}
-void delInput(NODES *mainNODE){
-  int num = 0;
-  int numTwo = 0;
-
-  num = cin.get();
-  if(num == '\n'){
-    num = locatePosition(mainNODE) + 1;
-    numTwo = num + 1;
-  } 
-  else{
-    cin >> num;
-    numTwo = cin.get();
-    if(numTwo != '\n'){
-      cin >> numTwo;
-    }
-  }
-  while(num != numTwo){
-    mainNODE = deleteLines(mainNODE,num);
-    num++;
-  }
 }
 NODES *deleteLines(NODES *mainNODE,int from){
   int where = 0;
