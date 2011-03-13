@@ -16,7 +16,7 @@ int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current,int where,int total);
 void driveCommands(NODES *mainNODE);
 void display();
-NODES *deleteLines(NODES *mainNODE,int from,int till);
+NODES *deleteLines(NODES *mainNODE,int from,int till,int where,int total);
 
 int main(int argc, char *argv[])
 { 
@@ -79,33 +79,36 @@ void driveCommands(NODES *mainNODE){
   int numTwo = 0; 
   int where = 0;
   int total = 0;
-  total = countTotal(mainNODE);
+  
 
   while(quit){
+    total = countTotal(mainNODE);  
     where = locatePosition(mainNODE);
+    cout << mainNODE->line << endl;
     cout << "LINE[" << where <<"]";
     cout << " >> " << endl;
-    cin >> input >> num; 
+    cin >> input; 
 
     if(input == 'h' || input == 'H'){
       display();
     }
     if(input == 'm' || input == 'M'){
+      cin >> num;
       mainNODE = moveTo(mainNODE,num,where,total);
     }
     if(input == 'd' || input == 'D'){
-      cin >> numTwo;
-      mainNODE = deleteLines(mainNODE,num,numTwo);
+      cin >> num >> numTwo;
+      mainNODE = deleteLines(mainNODE,num,numTwo,where,total);
     }
     if(input == 'q' || input == 'Q'){
       quit = false;
     }
     if(input == 't' || input == 'T'){
       total = countTotal(mainNODE);
-      cout << "TOTAL: " << total << endl; 
+      cout << "TOTAL: " << total - 1 << endl; 
     }
   }
-
+  
 }
 int locatePosition(NODES *mainNODE){
   int count = 0;
@@ -142,17 +145,23 @@ NODES *moveTo(NODES *mainNODE,int current,int where,int total){
 	  mainNODE = mainNODE->front;
 	  current--;
 	}
-      }
-      cout << mainNODE->line << endl;
+      }     
     }
   else{
     cout << "ERROR: invalid line: " << current << endl;
+    driveCommands(mainNODE);
   }
   return mainNODE;
 }
-NODES *deleteLines(NODES *mainNODE,int from,int till){
-  
+NODES *deleteLines(NODES *mainNODE,int from,int till,int where,int total){
+  NODES *temp;
 
+  mainNODE = moveTo(mainNODE,from,where,total);
+  mainNODE->front->back = mainNODE->back;
+  mainNODE->back->front = mainNODE->front;
+  delete mainNODE;
+  where = locatePosition(mainNODE);
+  mainNODE = moveTo(mainNODE,1,where,total);
   return mainNODE;
 }
 void display(){
