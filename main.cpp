@@ -19,7 +19,6 @@ void display();
 NODES *deleteLines(NODES *mainNODE,int from);
 NODES *appendToFront(NODES *mainNODE,int num);
 NODES *appendToRear(NODES *mainNODE,int num);
-string userText();
 
 int main(int argc, char *argv[])
 { 
@@ -133,6 +132,7 @@ void driveCommands(NODES *mainNODE){
       else{
 	cin >> num;
       }
+      mainNODE = moveTo(mainNODE,num);
       mainNODE = appendToFront(mainNODE,num);
     }
     if(input == "b" || input == "B"){
@@ -143,6 +143,7 @@ void driveCommands(NODES *mainNODE){
       else{
 	cin >> num;
       }
+      mainNODE = moveTo(mainNODE,num);
       mainNODE = appendToRear(mainNODE,num);
     }
     if(input == "q" || input == "Q"){
@@ -237,10 +238,35 @@ void display(){
   cout << "q: quit and save lines." << endl;
 }
 NODES *appendToFront(NODES *mainNODE,int num){
+  NODES *newNode;
+  newNode = new NODES;
+  string newFront = "Hi";
+  
+  newNode->line = newFront;
+  newNode->back = 0;
+  newNode->front = 0;
 
+  newNode->front = mainNODE->front;
+  mainNODE->front = newNode;
   return mainNODE;
 }
 NODES *appendToRear(NODES *mainNODE,int num){
+  NODES *newNode;
+  newNode = new NODES;
+  string newFront  = "Hi";
+  
+  newNode->line = newFront;
+  newNode->back = 0;
+  newNode->front = 0;
+  
+  if(mainNODE->back == NULL){
+    newNode->front = mainNODE;
+    mainNODE = newNode;
+  }
+  else{
+  newNode->back = mainNODE->back;
+  mainNODE->back = newNode;
+  }
 
   return mainNODE;
 }
