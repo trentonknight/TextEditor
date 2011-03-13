@@ -11,9 +11,11 @@ struct NODES{
 };
 bool openFILE(ifstream& file,string filename);
 NODES *preLoad(ifstream& file,string newfile);
-int countLines(NODES *mainNODE);
-NODES *moveTo(NODES *mainNODE,int current,int where);
-void displayCommands(NODES *mainNODE);
+int locatePosition(NODES *mainNODE);
+int countTotal(NODES *mainNODE);
+NODES *moveTo(NODES *mainNODE,int current,int where,int total);
+void driveCommands(NODES *mainNODE);
+void display();
 NODES *deleteLines(NODES *mainNODE,int from,int till);
 
 int main(int argc, char *argv[])
@@ -25,7 +27,7 @@ int main(int argc, char *argv[])
   if(openFILE(grabFile,argv[1])){
     mainNODE = preLoad(grabFile,argv[1]);
   }
-  displayCommands(mainNODE);
+  driveCommands(mainNODE);
 }
 bool openFILE(ifstream& file,string filename){
   bool check = false;
@@ -50,64 +52,62 @@ NODES *preLoad(ifstream& file,string newfile){
     getline(file,lines);
     noLine = lines.size();
     if(noLine > 1){
-    newNODE = new NODES;
-    newNODE->line = lines;
-    newNODE->front = 0;
-    newNODE->back = 0;
+      newNODE = new NODES;
+      newNODE->line = lines;
+      newNODE->front = 0;
+      newNODE->back = 0;
   
-    newNODE->back = first->back;
-    first->back = newNODE;
-    newNODE->front = first;
-    if(newNODE->back != NULL){
-      newNODE->back->front = newNODE;
-    } 
-  
-    if(file.eof()){
-      file.close();
-    }
+      newNODE->back = first->back;
+      first->back = newNODE;
+      newNODE->front = first;
+      if(newNODE->back != NULL){
+	newNODE->back->front = newNODE;
+      }     
+      if(file.eof()){
+	first->front = 0;
+	file.close();
+      }
     }
   } 
   
   return first;
 }
-void displayCommands(NODES *mainNODE){
-  char input[10];
+void driveCommands(NODES *mainNODE){
+  char input;
   bool quit = true;
   int num = 0;
   int numTwo = 0; 
   int where = 0;
+  int total = 0;
+  total = countTotal(mainNODE);
 
   while(quit){
-    where = countLines(mainNODE);
-    cout << mainNODE->line << endl;
+    where = locatePosition(mainNODE);
     cout << "LINE[" << where <<"]";
     cout << " >> " << endl;
-    cin >> input; 
-    num = input[1] - 48;
-    numTwo = input[2] - 48;
+    cin >> input >> num; 
 
-    if(input[0] == 'h' || input[0] == 'H'){
-      cout << "h: display commands." << endl;
-      cout << "t: display total lines in linked list." << endl;
-      cout << "m #: move to requested line number." << endl;
-      cout << "d #-#: delete line numbers (EXAMPLE: d 2-4)" << endl;
-      cout << "a #: insert a new line of text after line number." << endl;
-      cout << "b #: insert a new line of text before line number." << endl;
-      cout << "q: quit and save lines." << endl;
+    if(input == 'h' || input == 'H'){
+      display();
     }
-    if(input[0] == 'm' || input[0] == 'M'){
-      mainNODE = moveTo(mainNODE,num,where);
+    if(input == 'm' || input == 'M'){
+      mainNODE = moveTo(mainNODE,num,where,total);
     }
-    if(input[0] == 'd' || input[0] == 'D'){
+    if(input == 'd' || input == 'D'){
+      cin >> numTwo;
       mainNODE = deleteLines(mainNODE,num,numTwo);
     }
-    if(input[0] == 'q' || input[0] == 'Q'){
+    if(input == 'q' || input == 'Q'){
       quit = false;
+    }
+    if(input == 't' || input == 'T'){
+      total = countTotal(mainNODE);
+      cout << "TOTAL: " << total << endl; 
     }
   }
 
 }
-int countLines(NODES *mainNODE){
+int locatePosition(NODES *mainNODE){
   int count = 0;
   while(mainNODE != NULL){
     count++;
@@ -115,26 +115,52 @@ int countLines(NODES *mainNODE){
   }
   return count;
 }
-NODES *moveTo(NODES *mainNODE,int current,int where){
-  if(where > current){
-    current = where - current;
-    while(current != 0){
-      mainNODE = mainNODE->back;
-      current--;
-    }
+int countTotal(NODES *mainNODE){
+  int count = 0;
+  while(mainNODE->back != NULL){
+    mainNODE = mainNODE->back;
   }
+  while(mainNODE != NULL){
+    mainNODE = mainNODE->front;
+    count++;
+  }
+  return count;
+}
+NODES *moveTo(NODES *mainNODE,int current,int where,int total){
+  if(current > 0 && current < total)
+    {
+      if(where > current){
+	current = where - current;
+	while(current != 0){
+	  mainNODE = mainNODE->back;
+	  current--;
+	}
+      }
+      else{
+	current = current - where;
+	while(current != 0){
+	  mainNODE = mainNODE->front;
+	  current--;
+	}
+      }
+      cout << mainNODE->line << endl;
+    }
   else{
-    current = current - where;
-    while(current != 0){
-      mainNODE = mainNODE->front;
-      current--;
-    }
+    cout << "ERROR: invalid line: " << current << endl;
   }
-  cout << mainNODE->line << endl;
   return mainNODE;
 }
 NODES *deleteLines(NODES *mainNODE,int from,int till){
   
 
   return mainNODE;
+}
+void display(){
+  cout << "h: display commands." << endl;
+  cout << "t: display total lines in linked list." << endl;
+  cout << "m #: move to requested line number." << endl;
+  cout << "d #-#: delete line numbers (EXAMPLE: d 2-4)" << endl;
+  cout << "a #: insert a new line of text after line number." << endl;
+  cout << "b #: insert a new line of text before line number." << endl;
+  cout << "q: quit and save lines." << endl;
 }
