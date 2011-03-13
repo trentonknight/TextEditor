@@ -3,12 +3,12 @@
 #include <iomanip>
 using namespace std;
 
-
 struct NODES{
   string line;
   NODES* back;
   NODES* front;
 };
+
 bool openFILE(ifstream& file,string filename);
 NODES *preLoad(ifstream& file,string newfile);
 int locatePosition(NODES *mainNODE);
@@ -17,6 +17,9 @@ NODES *moveTo(NODES *mainNODE,int current);
 void driveCommands(NODES *mainNODE);
 void display();
 NODES *deleteLines(NODES *mainNODE,int from);
+NODES *appendToFront(NODES *mainNODE,int num);
+NODES *appendToRear(NODES *mainNODE,int num);
+string userText();
 
 int main(int argc, char *argv[])
 { 
@@ -122,6 +125,26 @@ void driveCommands(NODES *mainNODE){
 	num++;
       }
     }
+    if(input == "a" || input == "A"){
+      num = cin.get();
+      if(num == '\n'){
+	num = locatePosition(mainNODE) + 1;
+      } 
+      else{
+	cin >> num;
+      }
+      mainNODE = appendToFront(mainNODE,num);
+    }
+    if(input == "b" || input == "B"){
+      num = cin.get();
+      if(num == '\n'){
+	num = locatePosition(mainNODE) - 1;
+      } 
+      else{
+	cin >> num;
+      }
+      mainNODE = appendToRear(mainNODE,num);
+    }
     if(input == "q" || input == "Q"){
       quit = false;
     }
@@ -212,4 +235,12 @@ void display(){
   cout << "a #: insert a new line of text after line number." << endl;
   cout << "b #: insert a new line of text before line number." << endl;
   cout << "q: quit and save lines." << endl;
+}
+NODES *appendToFront(NODES *mainNODE,int num){
+
+  return mainNODE;
+}
+NODES *appendToRear(NODES *mainNODE,int num){
+
+  return mainNODE;
 }
