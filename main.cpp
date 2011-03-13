@@ -154,14 +154,18 @@ NODES *moveTo(NODES *mainNODE,int current,int where,int total){
   return mainNODE;
 }
 NODES *deleteLines(NODES *mainNODE,int from,int till,int where,int total){
-  NODES *temp;
-
   mainNODE = moveTo(mainNODE,from,where,total);
+  if(from == 1){
+    mainNODE->front->back = mainNODE->back;
+    from = 2;
+  }
+  else{
   mainNODE->front->back = mainNODE->back;
   mainNODE->back->front = mainNODE->front;
+  }
   delete mainNODE;
   where = locatePosition(mainNODE);
-  mainNODE = moveTo(mainNODE,1,where,total);
+  mainNODE = moveTo(mainNODE,from,where,total);
   return mainNODE;
 }
 void display(){
