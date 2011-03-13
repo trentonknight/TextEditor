@@ -97,7 +97,12 @@ void driveCommands(NODES *mainNODE){
     }
     if(input == 'd' || input == 'D'){
       cin >> num >> numTwo;
+      while(num != numTwo){
       mainNODE = deleteLines(mainNODE,num,where,total);
+      total = countTotal(mainNODE);  
+      where = locatePosition(mainNODE);
+      num++;
+      }
     }
     if(input == 'q' || input == 'Q'){
       quit = false;
