@@ -16,7 +16,7 @@ int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current,int where,int total);
 void driveCommands(NODES *mainNODE);
 void display();
-NODES *deleteLines(NODES *mainNODE,int from,int till,int where,int total);
+NODES *deleteLines(NODES *mainNODE,int from,int where,int total);
 
 int main(int argc, char *argv[])
 { 
@@ -78,8 +78,7 @@ void driveCommands(NODES *mainNODE){
   int num = 0;
   int numTwo = 0; 
   int where = 0;
-  int total = 0;
-  
+  int total = 0;  
 
   while(quit){
     total = countTotal(mainNODE);  
@@ -98,7 +97,7 @@ void driveCommands(NODES *mainNODE){
     }
     if(input == 'd' || input == 'D'){
       cin >> num >> numTwo;
-      mainNODE = deleteLines(mainNODE,num,numTwo,where,total);
+      mainNODE = deleteLines(mainNODE,num,where,total);
     }
     if(input == 'q' || input == 'Q'){
       quit = false;
@@ -153,19 +152,24 @@ NODES *moveTo(NODES *mainNODE,int current,int where,int total){
   }
   return mainNODE;
 }
-NODES *deleteLines(NODES *mainNODE,int from,int till,int where,int total){
+NODES *deleteLines(NODES *mainNODE,int from,int where,int total){
   mainNODE = moveTo(mainNODE,from,where,total);
   if(from == 1){
     mainNODE->front->back = mainNODE->back;
-    from = 2;
   }
   else{
-  mainNODE->front->back = mainNODE->back;
-  mainNODE->back->front = mainNODE->front;
+    mainNODE->front->back = mainNODE->back;
+    mainNODE->back->front = mainNODE->front;
   }
   delete mainNODE;
   where = locatePosition(mainNODE);
-  mainNODE = moveTo(mainNODE,from,where,total);
+  if(from != 1){
+  mainNODE = moveTo(mainNODE,from -1,where,total);
+  }
+  else{
+  mainNODE = moveTo(mainNODE,from +1,where,total);
+  }
+  
   return mainNODE;
 }
 void display(){
