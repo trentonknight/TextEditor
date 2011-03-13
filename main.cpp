@@ -41,25 +41,30 @@ NODES *preLoad(ifstream& file,string newfile){
   first = new NODES;
   NODES *newNODE = 0;
   string lines;
+  int noLine = 0;
   
   file.open(newfile.c_str(),ios::in);
   
   while(!file.eof()){
+    noLine = 0;
     getline(file,lines);
+    noLine = lines.size();
+    if(noLine > 1){
     newNODE = new NODES;
     newNODE->line = lines;
     newNODE->front = 0;
     newNODE->back = 0;
   
-    newNODE->front = first->front;
-    first->front = newNODE;
-    newNODE->back = first;
-    if(newNODE->front != NULL){
-      newNODE->front->back = newNODE;
+    newNODE->back = first->back;
+    first->back = newNODE;
+    newNODE->front = first;
+    if(newNODE->back != NULL){
+      newNODE->back->front = newNODE;
     } 
   
     if(file.eof()){
       file.close();
+    }
     }
   } 
   
