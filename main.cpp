@@ -246,10 +246,11 @@ NODES *appendToFront(NODES *mainNODE,int num){
   newNode->back = 0;
   newNode->front = 0;
 
-  newNode->front = mainNODE;
-  newNode->back = mainNODE->back;
-  mainNODE->back->front = newNode;
-  mainNODE->back = newNode;
+  newNode->back = mainNODE;
+  newNode->front = mainNODE->front;
+  mainNODE->front->back = newNode;
+  mainNODE->front = newNode;
+ 
   return mainNODE;
 }
 NODES *appendToRear(NODES *mainNODE,int num){
@@ -260,10 +261,20 @@ NODES *appendToRear(NODES *mainNODE,int num){
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
-  
+
+  if(mainNODE->back == NULL){
+    newNode->back = NULL;
+    newNode->front = mainNODE;
+    mainNODE->back = new NODES;
+    mainNODE->back->front = newNode;
+    mainNODE->back = newNode;
+  } 
+  else{ 
   newNode->front = mainNODE;
-  mainNODE->front = mainNODE;
-  mainNODE = newNode;
+  newNode->back = mainNODE->back;
+  mainNODE->back->front = newNode;
+  mainNODE->back = newNode;
+  }
 
   return mainNODE;
 }
