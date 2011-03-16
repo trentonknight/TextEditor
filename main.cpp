@@ -240,33 +240,30 @@ void display(){
 NODES *appendToFront(NODES *mainNODE,int num){
   NODES *newNode;
   newNode = new NODES;
-  string newFront = "Hi";
+  string newFront = "Front";
   
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
 
-  newNode->front = mainNODE->front;
-  mainNODE->front = newNode;
+  newNode->front = mainNODE;
+  newNode->back = mainNODE->back;
+  mainNODE->back->front = newNode;
+  mainNODE->back = newNode;
   return mainNODE;
 }
 NODES *appendToRear(NODES *mainNODE,int num){
   NODES *newNode;
   newNode = new NODES;
-  string newFront  = "Hi";
+  string newFront  = "Rear";
   
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
   
-  if(mainNODE->back == NULL){
-    newNode->front = mainNODE;
-    mainNODE = newNode;
-  }
-  else{
-  newNode->back = mainNODE->back;
-  mainNODE->back = newNode;
-  }
+  newNode->front = mainNODE;
+  mainNODE->front = mainNODE;
+  mainNODE = newNode;
 
   return mainNODE;
 }
