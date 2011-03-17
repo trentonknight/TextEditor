@@ -147,6 +147,7 @@ void driveCommands(NODES *mainNODE){
       mainNODE = appendToRear(mainNODE,num);
     }
     if(input == "q" || input == "Q"){
+      mainNODE = NULL;
       quit = false;
     }
     if(input == "t" || input == "T"){
@@ -240,7 +241,11 @@ void display(){
 NODES *appendToFront(NODES *mainNODE,int num){
   NODES *newNode;
   newNode = new NODES;
-  string newFront = "Front";
+  string newFront;
+
+  cout << "$ " << endl;
+  cin.ignore(25, '\n');
+  getline(cin,newFront);
   
   newNode->line = newFront;
   newNode->back = 0;
@@ -256,8 +261,12 @@ NODES *appendToFront(NODES *mainNODE,int num){
 NODES *appendToRear(NODES *mainNODE,int num){
   NODES *newNode;
   newNode = new NODES;
-  string newFront  = "Rear";
-  
+  string newFront;
+
+  cout << "$ " << endl;
+  cin.ignore(25, '\n');
+  getline(cin,newFront);
+
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
@@ -270,10 +279,10 @@ NODES *appendToRear(NODES *mainNODE,int num){
     mainNODE->back = newNode;
   } 
   else{ 
-  newNode->front = mainNODE;
-  newNode->back = mainNODE->back;
-  mainNODE->back->front = newNode;
-  mainNODE->back = newNode;
+    newNode->front = mainNODE;
+    newNode->back = mainNODE->back;
+    mainNODE->back->front = newNode;
+    mainNODE->back = newNode;
   }
 
   return mainNODE;
