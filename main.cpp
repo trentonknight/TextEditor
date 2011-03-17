@@ -11,6 +11,7 @@ struct NODES{
 
 bool openFILE(ifstream& file,string filename);
 NODES *preLoad(ifstream& file,string newfile);
+NODES *noFile(NODES *mainNODE);
 int locatePosition(NODES *mainNODE);
 int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current);
@@ -25,9 +26,13 @@ int main(int argc, char *argv[])
   NODES *mainNODE;
   mainNODE = new NODES;
   ifstream grabFile;
-
-  if(openFILE(grabFile,argv[1])){
-    mainNODE = preLoad(grabFile,argv[1]);
+  if(argv[1] != 0x0){
+    if(openFILE(grabFile,argv[1])){
+      mainNODE = preLoad(grabFile,argv[1]);
+    }
+  }
+  else{
+    mainNODE = noFile(mainNODE);
   }
   driveCommands(mainNODE);
 }
@@ -39,6 +44,19 @@ bool openFILE(ifstream& file,string filename){
   }
   file.close();
   return check;
+}
+NODES *noFile(NODES *mainNODE){
+  NODES *newNODE = 0;
+  newNODE = new NODES;
+  newNODE->line = "\0";
+  newNODE->front = 0;
+  newNODE->back = 0;
+
+  newNODE->back = mainNODE->back;
+  mainNODE->back = newNODE;
+  newNODE->front = mainNODE;
+
+  return mainNODE;  
 }
 NODES *preLoad(ifstream& file,string newfile){
   NODES *first = 0;
