@@ -10,6 +10,7 @@ struct NODES{
 };
 
 bool openFILE(ifstream& file,string filename);
+void writeToFile(string filename,NODES *mainNODE);
 NODES *preLoad(ifstream& file,string newfile);
 NODES *noFile(NODES *mainNODE);
 int locatePosition(NODES *mainNODE);
@@ -26,15 +27,25 @@ int main(int argc, char *argv[])
   NODES *mainNODE;
   mainNODE = new NODES;
   ifstream grabFile;
+  bool goodFile = false;
+  string filename;
+
   if(argv[1] != 0x0){
-    if(openFILE(grabFile,argv[1])){
+    goodFile = openFILE(grabFile,argv[1]);
+    if(goodFile){
       mainNODE = preLoad(grabFile,argv[1]);
+      filename = argv[1];
     }
   }
   else{
     mainNODE = noFile(mainNODE);
   }
   driveCommands(mainNODE);
+  if(!goodFile){
+    cout << "Enter filename you wish to save as: " << endl;
+    cin >> filename;
+  }
+  writeToFile(filename,mainNODE);
 }
 bool openFILE(ifstream& file,string filename){
   bool check = false;
@@ -44,6 +55,18 @@ bool openFILE(ifstream& file,string filename){
   }
   file.close();
   return check;
+}
+void writeToFile(string filename,NODES *mainNODE){
+  ofstream outfile;
+  mainNODE = moveTo(mainNODE,1);
+  outfile.open(filename.c_str(), ios::binary);
+  if(outfile){
+    while(mainNODE->front != 0){
+      outfile << mainNODE->line << endl;
+      mainNODE = mainNODE->front;
+    }
+  }
+  outfile.close();
 }
 NODES *noFile(NODES *mainNODE){
   NODES *newNODE = 0;
@@ -165,7 +188,6 @@ void driveCommands(NODES *mainNODE){
       mainNODE = appendToRear(mainNODE,num);
     }
     if(input == "q" || input == "Q"){
-      mainNODE = NULL;
       quit = false;
     }
     if(input == "t" || input == "T"){
