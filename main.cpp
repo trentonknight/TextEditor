@@ -1,3 +1,14 @@
+////////////////////////////////////////////////////////////////////////
+///CODE FILENAME: Mansfield-ASSN1-DLLProg
+///DESCRIPTION:   A Simplisitic Line Editor (Like VI just nowhere near as good.)
+///               writes and saves documents via CLI or user choice.
+///  DATE:    	19MAR11
+///  DESIGNER:	Jason N Mansfield
+///  FUNCTIONS: 
+///            openFILE(), writeToFile(),preLoad(),noFile(),locatePosition()
+///            countTotal(), moveTo(), driveCommands(),display(), deleteLines()
+///            appendToFront(), appendToRear().
+////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -19,9 +30,21 @@ NODES *moveTo(NODES *mainNODE,int current);
 void driveCommands(NODES *mainNODE);
 void display();
 NODES *deleteLines(NODES *mainNODE,int from);
-NODES *appendToFront(NODES *mainNODE,int num);
-NODES *appendToRear(NODES *mainNODE,int num);
-
+NODES *appendToFront(NODES *mainNODE);
+NODES *appendToRear(NODES *mainNODE);
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	main
+///  DESCRIPTION: takes CLI input from user and cycles through 
+///               functions.
+///  INPUT:
+///  	Parameters: argv[1] recieves any user input for filename
+///  	File:  	if verified true user chooses which file to load
+///  OUTPUT:   
+///  	Return Val: Linked List with multiple lines of character strings
+///  	Parameters: filename or argv[1]
+///  	File:	strings of characters
+///  CALLS TO:  openFILE, preLoad, noFile, driveCommands, writeToFile
+//////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 { 
   NODES *mainNODE;
@@ -47,6 +70,17 @@ int main(int argc, char *argv[])
   }
   writeToFile(filename,mainNODE);
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:  openFILE
+///  DESCRIPTION:  verifes file exists
+///  INPUT:
+///  	Parameters: ifstream and string name of file from argv[1]
+///  	File:  	checks to see if correct CLI filename was given.
+///  OUTPUT:   
+///  	Return Val: bool value
+///  	Parameters: if file is found true then bool true is returned.
+///  	File:	user CLI input name
+//////////////////////////////////////////////////////////////////////////
 bool openFILE(ifstream& file,string filename){
   bool check = false;
   file.open(filename.c_str(), ios::binary);
@@ -56,6 +90,19 @@ bool openFILE(ifstream& file,string filename){
   file.close();
   return check;
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	writeToFile
+///  DESCRIPTION: traverses list and writes to file
+///  INPUT:
+///  	Parameters: filename is the file which to write too.
+///                 mainNODE is the list which is written to file
+///  	File:  	strings of characters
+///  OUTPUT:   
+///  	Return Val: ofstream to file
+///  	Parameters: traversed list is written to user selected file
+///  	File:	strings of characters per line
+///  CALLS TO:  moveTo
+//////////////////////////////////////////////////////////////////////////
 void writeToFile(string filename,NODES *mainNODE){
   ofstream outfile;
   mainNODE = moveTo(mainNODE,1);
@@ -68,6 +115,17 @@ void writeToFile(string filename,NODES *mainNODE){
   }
   outfile.close();
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	noFile
+///  DESCRIPTION:  in the event user does not enter a filname via CLI when
+///                starting program noFile creates enough nodes for new strings to be
+///                appended to list.
+///  INPUT:
+///  	Parameters: empty mainNODE
+///  OUTPUT:   
+///  	Return Val: mainNODE with one new NODE
+///  	Parameters: mainNODE->line = "\0"
+//////////////////////////////////////////////////////////////////////////
 NODES *noFile(NODES *mainNODE){
   NODES *newNODE = 0;
   newNODE = new NODES;
@@ -81,6 +139,17 @@ NODES *noFile(NODES *mainNODE){
 
   return mainNODE;  
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	preLoad
+///  DESCRIPTION:  reads and parses ifstream data to doubly linked list
+///  INPUT:
+///  	Parameters: ifstream file is user approved newfile which to stream data.
+///                 from. 
+///  	File:  	any characters from text, no validation or filtering is done.
+///  OUTPUT:   
+///  	Return Val: doubly linked list is returned full from file data.
+///  	Parameters: NODES *first
+//////////////////////////////////////////////////////////////////////////
 NODES *preLoad(ifstream& file,string newfile){
   NODES *first = 0;
   first = new NODES;
@@ -115,6 +184,17 @@ NODES *preLoad(ifstream& file,string newfile){
   
   return first;
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	driveCommands
+///  DESCRIPTION:  core driver program that makes all calls while editing
+///                doubly linked list.
+///  INPUT:
+///  	Parameters: mainNODE primary doubly linked list
+///  OUTPUT:   
+///  	Return Val: mainNODE is complete after user has finished all editing.
+///  CALLS TO:  moveTo, locatePosition, display, deleteLines, appendToFront
+///             appendToRear, countTotal.
+//////////////////////////////////////////////////////////////////////////
 void driveCommands(NODES *mainNODE){
   string input;
   bool quit = true;
@@ -174,7 +254,7 @@ void driveCommands(NODES *mainNODE){
 	cin >> num;
       }
       mainNODE = moveTo(mainNODE,num);
-      mainNODE = appendToFront(mainNODE,num);
+      mainNODE = appendToFront(mainNODE);
     }
     if(input == "b" || input == "B"){
       num = cin.get();
@@ -185,7 +265,7 @@ void driveCommands(NODES *mainNODE){
 	cin >> num;
       }
       mainNODE = moveTo(mainNODE,num);
-      mainNODE = appendToRear(mainNODE,num);
+      mainNODE = appendToRear(mainNODE);
     }
     if(input == "q" || input == "Q"){
       quit = false;
@@ -197,6 +277,15 @@ void driveCommands(NODES *mainNODE){
   }
   
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION: locatePosition
+///  DESCRIPTION:  finds end of current list
+///  INPUT:
+///  	Parameters: mainNODE
+///  OUTPUT:   
+///  	Return Val: count of traversals till NULL is found
+///  	Parameters: returns int count of traversals
+//////////////////////////////////////////////////////////////////////////
 int locatePosition(NODES *mainNODE){
   int count = 0;
   while(mainNODE != NULL){
@@ -205,6 +294,16 @@ int locatePosition(NODES *mainNODE){
   }
   return count;
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	countTotal
+///  DESCRIPTION: counts both forwards and backwards in list to get
+///               a total count of items in list.
+///  INPUT:
+///  	Parameters: mainNODE
+///  OUTPUT:   
+///  	Return Val: total count of list size.
+///  	Parameters: int value of traversal count.
+//////////////////////////////////////////////////////////////////////////
 int countTotal(NODES *mainNODE){
   int count = 0;
   while(mainNODE->back != NULL){
@@ -216,6 +315,19 @@ int countTotal(NODES *mainNODE){
   }
   return count;
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION: moveTo
+///  DESCRIPTION:  using both function countTotal for size and locatePosition
+///                moveTo is able to identify available locations and move to
+///                or warn user that location does not exist.
+///  INPUT:
+///  	Parameters: current is the interger value which represents where the user wants 
+///                 to access.
+///  OUTPUT:   
+///  	Return Val: if available mainNODE is returned with pointer moved to requested 
+///                 location.
+///  CALLS TO: countTotal,locatePosition,driveCommands
+//////////////////////////////////////////////////////////////////////////
 NODES *moveTo(NODES *mainNODE,int current){
   int total = countTotal(mainNODE);  
   int where = locatePosition(mainNODE);
@@ -243,6 +355,16 @@ NODES *moveTo(NODES *mainNODE,int current){
   }
   return mainNODE;
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	deleteLines
+///  DESCRIPTION: deletes one or many NODES as requested by user
+///  INPUT:
+///  	Parameters: mainNODE list
+///                 from is the node location being deleted.
+///  OUTPUT:   
+///  	Return Val: mainNODE after select NODES are removed
+///  CALLS TO: moveTo, locatePosition, 
+//////////////////////////////////////////////////////////////////////////
 NODES *deleteLines(NODES *mainNODE,int from){
   int where = 0;
   where = locatePosition(mainNODE);
@@ -269,6 +391,10 @@ NODES *deleteLines(NODES *mainNODE,int from){
   
   return mainNODE;
 }
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:	display
+///  DESCRIPTION:  simple message for user.
+//////////////////////////////////////////////////////////////////////////
 void display(){
   cout << "h: display commands." << endl;
   cout << "t: display total lines in linked list." << endl;
@@ -278,7 +404,17 @@ void display(){
   cout << "b #: insert a new line of text before line number." << endl;
   cout << "q: quit and save lines." << endl;
 }
-NODES *appendToFront(NODES *mainNODE,int num){
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:  appendToFront
+///  DESCRIPTION:  appends new NODE with user input in front of select
+///                NODE local.
+///  INPUT:
+///  	Parameters: mainNODE is the current list
+///  OUTPUT:   
+///  	Return Val: mainNODE is returned with appened NODE
+///  CALLS TO:  List of programmer-written functions called (names only)
+//////////////////////////////////////////////////////////////////////////
+NODES *appendToFront(NODES *mainNODE){
   NODES *newNode;
   newNode = new NODES;
   string newFront;
@@ -298,7 +434,17 @@ NODES *appendToFront(NODES *mainNODE,int num){
  
   return mainNODE;
 }
-NODES *appendToRear(NODES *mainNODE,int num){
+///////////////////////////////////////////////////////////////////////////
+///  FUNCTION:  appendToRear
+///  DESCRIPTION: appends in front of NODE, more realitically it moves 
+///               NODE forwards once and places new NODE in its previous local.
+///  INPUT:
+///  	Parameters: mainNODE is the current list
+///  OUTPUT:   
+///  	Return Val: appended mainNODE
+///  CALLS TO:  List of programmer-written functions called (names only)
+//////////////////////////////////////////////////////////////////////////
+NODES *appendToRear(NODES *mainNODE){
   NODES *newNode;
   newNode = new NODES;
   string newFront;
