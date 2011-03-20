@@ -23,7 +23,7 @@ struct NODES{
 bool openFILE(ifstream& file,string filename);
 void writeToFile(string filename,NODES *mainNODE);
 NODES *preLoad(ifstream& file,string newfile);
-NODES *noFile(NODES *mainNODE,int current);
+NODES *newLine(NODES *mainNODE,int current);
 int locatePosition(NODES *mainNODE);
 int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     }
   }
   else{
-    mainNODE = noFile(mainNODE,0);
+    mainNODE = newLine(mainNODE,0);
   }
   driveCommands(mainNODE);
   if(!goodFile){
@@ -116,17 +116,19 @@ void writeToFile(string filename,NODES *mainNODE){
   outfile.close();
 }
 ///////////////////////////////////////////////////////////////////////////
-///  FUNCTION:	noFile
+///  FUNCTION:	newLine
 ///  DESCRIPTION:  in the event user does not enter a filname via CLI when
 ///                starting program noFile creates enough nodes for new strings to be
-///                appended to list.
+///                appended to list. This also automates any requests by user
+///                which moves pointer past available line numbers.
 ///  INPUT:
 ///  	Parameters: empty mainNODE
 ///  OUTPUT:   
 ///  	Return Val: mainNODE with one new NODE
 ///  	Parameters: mainNODE->line = "\0"
+///  CALLS TO: locatePosition 
 //////////////////////////////////////////////////////////////////////////
-NODES *noFile(NODES *mainNODE,int current){
+NODES *newLine(NODES *mainNODE,int current){
   NODES *newNODE = 0;
   newNODE = new NODES;
   int pos = 0;
@@ -261,8 +263,10 @@ void driveCommands(NODES *mainNODE){
       else{
 	cin >> num;
       }
+      numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num);
       mainNODE = appendToFront(mainNODE);
+      mainNODE = moveTo(mainNODE,numTwo);
     }
     if(input == "b" || input == "B"){
       num = cin.get();
@@ -272,8 +276,10 @@ void driveCommands(NODES *mainNODE){
       else{
 	cin >> num;
       }
+      numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num -1);
       mainNODE = appendToRear(mainNODE);
+      mainNODE = moveTo(mainNODE,numTwo);
     }
     if(input == "q" || input == "Q"){
       quit = false;
@@ -358,8 +364,7 @@ NODES *moveTo(NODES *mainNODE,int current){
       }     
     }
   else{
-    noFile(mainNODE,current);
-    driveCommands(mainNODE);
+    newLine(mainNODE,current);
   }
   return mainNODE;
 }
@@ -382,7 +387,7 @@ NODES *deleteLines(NODES *mainNODE,int from){
     if(mainNODE->front->front == NULL && mainNODE->back == NULL){
       mainNODE = NULL;
       mainNODE = new NODES;
-      noFile(mainNODE,0);
+      newLine(mainNODE,0);
     }
     mainNODE->front->back = mainNODE->back;
   }
@@ -434,7 +439,7 @@ NODES *appendToFront(NODES *mainNODE){
   string newFront;
 
   cout << "$ " << endl;
-  cin.ignore(25, '\n');
+  cin.ignore(200, '\n');
   getline(cin,newFront);
   
   newNode->line = newFront;
@@ -464,7 +469,7 @@ NODES *appendToRear(NODES *mainNODE){
   string newFront;
 
   cout << "$ " << endl;
-  cin.ignore(1, '\n');
+  cin.ignore(200, '\n');
   getline(cin,newFront);
 
   newNode->line = newFront;
