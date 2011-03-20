@@ -30,8 +30,8 @@ NODES *moveTo(NODES *mainNODE,int current);
 void driveCommands(NODES *mainNODE);
 void display();
 NODES *deleteLines(NODES *mainNODE,int from);
-NODES *appendToFront(NODES *mainNODE);
-NODES *appendToRear(NODES *mainNODE);
+NODES *appendToFront(NODES *mainNODE,bool here);
+NODES *appendToRear(NODES *mainNODE,bool here);
 ///////////////////////////////////////////////////////////////////////////
 ///  FUNCTION:	main
 ///  DESCRIPTION: takes CLI input from user and cycles through 
@@ -208,6 +208,7 @@ NODES *preLoad(ifstream& file,string newfile){
 void driveCommands(NODES *mainNODE){
   string input;
   bool quit = true;
+  bool move = true;
   int total = 0;
   int num = 0; 
   int numTwo = 0; 
@@ -259,26 +260,28 @@ void driveCommands(NODES *mainNODE){
       num = cin.get();
       if(num == '\n'){
 	num = locatePosition(mainNODE) + 1;
+        move = false;
       } 
       else{
 	cin >> num;
       }
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num);
-      mainNODE = appendToFront(mainNODE);
+      mainNODE = appendToFront(mainNODE,move);
       mainNODE = moveTo(mainNODE,numTwo);
     }
     if(input == "b" || input == "B"){
       num = cin.get();
       if(num == '\n'){
 	num = locatePosition(mainNODE);
+        move = false;
       } 
       else{
 	cin >> num;
       }
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num -1);
-      mainNODE = appendToRear(mainNODE);
+      mainNODE = appendToRear(mainNODE,move);
       mainNODE = moveTo(mainNODE,numTwo);
     }
     if(input == "q" || input == "Q"){
@@ -432,14 +435,16 @@ void display(){
 ///  	Return Val: mainNODE is returned with appened NODE
 ///  CALLS TO:  List of programmer-written functions called (names only)
 //////////////////////////////////////////////////////////////////////////
-NODES *appendToFront(NODES *mainNODE){
+NODES *appendToFront(NODES *mainNODE,bool here){
   NODES *newNode;
   newNode = new NODES;
 
   string newFront;
 
   cout << "$ " << endl;
-  cin.ignore(200, '\n');
+  if(here){
+  cin.ignore(1, '\n');
+  }
   getline(cin,newFront);
   
   newNode->line = newFront;
@@ -463,15 +468,17 @@ NODES *appendToFront(NODES *mainNODE){
 ///  	Return Val: appended mainNODE
 ///  CALLS TO:  List of programmer-written functions called (names only)
 //////////////////////////////////////////////////////////////////////////
-NODES *appendToRear(NODES *mainNODE){
+NODES *appendToRear(NODES *mainNODE,bool here){
   NODES *newNode;
   newNode = new NODES;
   string newFront;
-
+  
   cout << "$ " << endl;
-  cin.ignore(200, '\n');
+  if(here){
+  cin.ignore(1, '\n');
+  }
   getline(cin,newFront);
-
+  
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
