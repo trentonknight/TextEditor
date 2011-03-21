@@ -259,7 +259,7 @@ void driveCommands(NODES *mainNODE){
     if(input == "a" || input == "A"){
       num = cin.get();
       if(num == '\n'){
-	num = locatePosition(mainNODE) + 1;
+	num = locatePosition(mainNODE);
         move = false;
       } 
       else{
@@ -267,6 +267,8 @@ void driveCommands(NODES *mainNODE){
       }
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num);
+      cout << "ENTER: to edit"<< endl;
+      cin.get();//pause before user input
       mainNODE = appendToFront(mainNODE,move);
       mainNODE = moveTo(mainNODE,numTwo);
     }
@@ -281,6 +283,8 @@ void driveCommands(NODES *mainNODE){
       }
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num -1);
+      cout << "ENTER: to edit" << endl;
+      cin.get();//pause before user input
       mainNODE = appendToRear(mainNODE,move);
       mainNODE = moveTo(mainNODE,numTwo);
     }
@@ -367,7 +371,7 @@ NODES *moveTo(NODES *mainNODE,int current){
       }     
     }
   else{
-    newLine(mainNODE,current);
+    cout << "ERROR: line does not exist." << endl;
   }
   return mainNODE;
 }
@@ -438,15 +442,11 @@ void display(){
 NODES *appendToFront(NODES *mainNODE,bool here){
   NODES *newNode;
   newNode = new NODES;
-
-  string newFront;
-
-  cout << "$ " << endl;
-  if(here){
-  cin.ignore(1, '\n');
-  }
-  getline(cin,newFront);
+  char newFront[20];
   
+  cout << "$ " << endl;
+  cin.getline(newFront,20);
+
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
@@ -471,14 +471,12 @@ NODES *appendToFront(NODES *mainNODE,bool here){
 NODES *appendToRear(NODES *mainNODE,bool here){
   NODES *newNode;
   newNode = new NODES;
-  string newFront;
+
+  char newFront[20];
   
   cout << "$ " << endl;
-  if(here){
-  cin.ignore(1, '\n');
-  }
-  getline(cin,newFront);
-  
+  cin.getline(newFront,20);
+
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
@@ -499,3 +497,4 @@ NODES *appendToRear(NODES *mainNODE,bool here){
 
   return mainNODE;
 }
+
