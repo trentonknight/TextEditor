@@ -448,7 +448,7 @@ NODES *moveTo(NODES *mainNODE,int current){
 ///                 from is the node location being deleted.
 ///  OUTPUT:   
 ///  	Return Val: mainNODE after select NODES are removed
-///  CALLS TO: moveTo, locatePosition, 
+///  CALLS TO: moveTo
 ///  f(n) = n
 //////////////////////////////////////////////////////////////////////////
 NODES *deleteLines(NODES *mainNODE,int from){
