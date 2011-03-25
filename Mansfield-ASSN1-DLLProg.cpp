@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-///#include <windows.h>
+#include <windows.h>
 #include <string>
 #include <cstdlib>
 using namespace std;
