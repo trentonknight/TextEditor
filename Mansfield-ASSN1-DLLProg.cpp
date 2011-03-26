@@ -129,6 +129,7 @@
     ///  f(n) = n
     //////////////////////////////////////////////////////////////////////////
     void writeToFile(string filename,NODES *mainNODE){
+    //windows claims issues here
       ofstream outfile;
       mainNODE = moveTo(mainNODE,1);
       outfile.open(filename.c_str(), ios::binary);
