@@ -30,8 +30,8 @@ NODES *moveTo(NODES *mainNODE,int current);
 void driveCommands(NODES *mainNODE);
 void display();
 NODES *deleteLines(NODES *mainNODE,int from);
-NODES *appendToFront(NODES *mainNODE,bool here);
-NODES *appendToRear(NODES *mainNODE,bool here);
+NODES *appendToFront(NODES *mainNODE);
+NODES *appendToRear(NODES *mainNODE);
 
 //*** km: Leave some blank lines for readability.
 
@@ -84,9 +84,8 @@ int main(int argc, char *argv[])
     }
   }
   else{
-    // //*** km:
-    // cout << "In initial else\n";
-    // cin.get();   
+    mainNODE->front = 0;
+    mainNODE->back = 0;  
     mainNODE = newLine(mainNODE);
     mainNODE = newLine(mainNODE);
     
@@ -201,7 +200,7 @@ NODES *preLoad(ifstream& file,string newfile){
   int noLine = 0;
   
   file.open(newfile.c_str(),ios::in);
-  
+  ///NULL front a back of list
   first->back = 0;
   first->front = 0;
   
@@ -229,7 +228,7 @@ NODES *preLoad(ifstream& file,string newfile){
       }
     }
   } 
-  
+  first->front = 0;
   return first;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -247,7 +246,6 @@ NODES *preLoad(ifstream& file,string newfile){
 void driveCommands(NODES *mainNODE){
   string input;
   bool quit = true;
-  bool move = true;
   int total = 0;
   int num = 0; 
   int numTwo = 0; 
@@ -298,7 +296,6 @@ void driveCommands(NODES *mainNODE){
       num = cin.get();
       if(num == '\n'){
 	num = locatePosition(mainNODE);
-        move = false;
       } 
       else{
 	cin >> num;
@@ -307,14 +304,13 @@ void driveCommands(NODES *mainNODE){
       mainNODE = moveTo(mainNODE,num);
       cout << "ENTER: to edit"<< endl;
       cin.get();//pause before user input
-      mainNODE = appendToFront(mainNODE,move);
+      mainNODE = appendToFront(mainNODE);
       mainNODE = moveTo(mainNODE,numTwo);
     }
     if(input == "b" || input == "B"){
       num = cin.get();
       if(num == '\n'){
 	num = locatePosition(mainNODE);
-        move = false;
       } 
       else{
 	cin >> num;
@@ -323,7 +319,7 @@ void driveCommands(NODES *mainNODE){
       mainNODE = moveTo(mainNODE,num -1);
       cout << "ENTER: to edit" << endl;
       cin.get();//pause before user input
-      mainNODE = appendToRear(mainNODE,move);
+      mainNODE = appendToRear(mainNODE);
       mainNODE = moveTo(mainNODE,numTwo);
     }
     if(input == "q" || input == "Q"){
@@ -374,10 +370,10 @@ int locatePosition(NODES *mainNODE){
 //////////////////////////////////////////////////////////////////////////
 int countTotal(NODES *mainNODE){
   int count = 0;
-  while(mainNODE->back != NULL){
+  while(mainNODE->back != 0){
     mainNODE = mainNODE->back;
   }
-  while(mainNODE->front != NULL){
+  while(mainNODE->front != 0){
     mainNODE = mainNODE->front;
     count++;
   }
@@ -419,7 +415,7 @@ NODES *moveTo(NODES *mainNODE,int current){
       }     
     }
   else{
-    cout << "ERROR: line does not exist." << endl;
+    mainNODE = appendToFront(mainNODE);
   }
   return mainNODE;
 }
@@ -439,12 +435,7 @@ NODES *deleteLines(NODES *mainNODE,int from){
   where = locatePosition(mainNODE);
   mainNODE = moveTo(mainNODE,from);
 
-  if(from == 1){
-    if(mainNODE->front->front == NULL && mainNODE->back == NULL){
-      mainNODE = NULL;
-      mainNODE = new NODES;
-      newLine(mainNODE);
-    }
+    if(from == 1){
     mainNODE->front->back = mainNODE->back;
   }
   else if(mainNODE->front == NULL){
@@ -461,8 +452,7 @@ NODES *deleteLines(NODES *mainNODE,int from){
   }
   else{
     mainNODE = moveTo(mainNODE,from +1);
-  }
-  
+    }
   return mainNODE;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -489,7 +479,7 @@ void display(){
 ///  CALLS TO:  List of programmer-written functions called (names only)
 ///  constant
 //////////////////////////////////////////////////////////////////////////
-NODES *appendToFront(NODES *mainNODE,bool here){
+NODES *appendToFront(NODES *mainNODE){
   NODES *newNode;
   newNode = new NODES;
   char newFront[20];
@@ -503,8 +493,18 @@ NODES *appendToFront(NODES *mainNODE,bool here){
 
   newNode->back = mainNODE;
   newNode->front = mainNODE->front;
+  if(mainNODE->front == 0 && mainNODE->back == mainNODE->back->back){
+    mainNODE->back = 0;
+    mainNODE->front = 0;
+    mainNODE->front = new NODES();
+    mainNODE->front->back = new NODES();
+    mainNODE->front->front = 0;
+    mainNODE->front->back = newNode;
+  }
+  else{
   mainNODE->front->back = newNode;
   mainNODE->front = newNode;
+  }
  
   return mainNODE;
 }
@@ -519,7 +519,7 @@ NODES *appendToFront(NODES *mainNODE,bool here){
 ///  CALLS TO:  List of programmer-written functions called (names only)
 ///  constant
 //////////////////////////////////////////////////////////////////////////
-NODES *appendToRear(NODES *mainNODE,bool here){
+NODES *appendToRear(NODES *mainNODE){
   NODES *newNode;
   newNode = new NODES;
 
