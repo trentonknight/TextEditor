@@ -67,18 +67,16 @@
         goodFile = openFILE(grabFile,file);
          if(goodFile){
           mainNODE = preLoad(grabFile,file);
-          }
-    
+         }   
      }
-      else{
-    
+      else{   
        mainNODE = newLine(mainNODE,0);
        mainNODE->line = "Append me!";
        mainNODE->front = 0;
        mainNODE->back->back = 0;
-       appendToFront(mainNODE,goodFile);
-      } 
-    
+       mainNODE = newLine(mainNODE,1);
+       mainNODE = mainNODE->back;
+      }     
       driveCommands(mainNODE);
       if(!goodFile){
         cout << "Enter filename you wish to save as: " << endl;
@@ -217,12 +215,10 @@
           newNODE->back = first->back;    //*** km: Need some comments here too.
           first->back = newNODE;
           newNODE->front = first;
-          if(newNODE->back != NULL){
-    	  newNODE->back->front = newNODE;
-          }     
+     
           if(file.eof()){      //*** km: Here and above -- proper indenting.
-    	first->front = 0;
-    	file.close();
+    	 first->front = 0;
+    	 file.close();
           }
         }
       } 
@@ -250,9 +246,8 @@
       int numTwo = 0; 
     
       while(quit){
-        cout << mainNODE->line << endl;
-        cout << "LINE[" << locatePosition(mainNODE) <<"]";
-        cout << " >> " << endl;
+        cout << "LINE[" << locatePosition(mainNODE) <<"] :";
+        cout << mainNODE->line;
         cin >> input;
     
         if(input == "h" || input == "H"){
@@ -301,7 +296,7 @@
           }
           numTwo = locatePosition(mainNODE);
           mainNODE = moveTo(mainNODE,num);
-          cout << "ENTER: to edit"<< endl;
+          cout << "(ENTER: to edit)";
           cin.get();//pause before user input
           mainNODE = appendToFront(mainNODE,move);
           mainNODE = moveTo(mainNODE,numTwo);
@@ -317,7 +312,7 @@
           }
           numTwo = locatePosition(mainNODE);
           mainNODE = moveTo(mainNODE,num - 1);
-          cout << "ENTER: to edit" << endl;
+          cout << "(ENTER: to edit)" << endl;
           cin.get();//pause before user input
           mainNODE = appendToRear(mainNODE,move);
           mainNODE = moveTo(mainNODE,numTwo);
@@ -329,6 +324,7 @@
           total = countTotal(mainNODE);
           cout << "TOTAL: " << total - 1 << endl; 
         }
+        cout << endl;
       }
       
     }
@@ -487,7 +483,7 @@
       NODES *newNode;
       newNode = new NODES;
       char newFront[20];
-      cout << "$ " << endl;
+      cout << "$: ";
       cin.getline(newFront,20);
     
       newNode->line = newFront;
@@ -518,7 +514,7 @@
     
       char newFront[20];
       
-      cout << "$ " << endl;
+      cout << "$: ";
       cin.getline(newFront,20);
     
       newNode->line = newFront;
