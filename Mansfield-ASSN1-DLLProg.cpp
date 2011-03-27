@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
   ifstream grabFile;
   bool goodFile = false;
   string filename;
-         //*** km: How about a comment here on what you're doing w/ this if..else?
+  //*** km: How about a comment here on what you're doing w/ this if..else?
          
   // //*** km:
   // cout << "Before initial if\n";
@@ -435,7 +435,7 @@ NODES *deleteLines(NODES *mainNODE,int from){
   where = locatePosition(mainNODE);
   mainNODE = moveTo(mainNODE,from);
 
-    if(from == 1){
+  if(from == 1){
     mainNODE->front->back = mainNODE->back;
   }
   else if(mainNODE->front == NULL){
@@ -452,7 +452,7 @@ NODES *deleteLines(NODES *mainNODE,int from){
   }
   else{
     mainNODE = moveTo(mainNODE,from +1);
-    }
+  }
   return mainNODE;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -493,17 +493,22 @@ NODES *appendToFront(NODES *mainNODE){
 
   newNode->back = mainNODE;
   newNode->front = mainNODE->front;
-  if(mainNODE->front == 0 && mainNODE->back == mainNODE->back->back){
-    mainNODE->back = 0;
-    mainNODE->front = 0;
-    mainNODE->front = new NODES();
-    mainNODE->front->back = new NODES();
-    mainNODE->front->front = 0;
-    mainNODE->front->back = newNode;
+  if(mainNODE->front == 0 && mainNODE->back != 0){
+    if(mainNODE->back == mainNODE->back->back){
+      mainNODE->back = 0;
+      mainNODE->front = 0;
+      mainNODE->front = new NODES();
+      mainNODE->front->back = new NODES();
+      mainNODE->front->front = 0;
+      mainNODE->front->back = newNode;
+    }
   }
   else{
-  mainNODE->front->back = newNode;
-  mainNODE->front = newNode;
+    if(mainNODE->front == 0){
+      mainNODE->front = new NODES();
+    }
+    mainNODE->front->back = newNode;
+    mainNODE->front = newNode;
   }
  
   return mainNODE;
@@ -548,4 +553,3 @@ NODES *appendToRear(NODES *mainNODE){
 
   return mainNODE;
 }
-
