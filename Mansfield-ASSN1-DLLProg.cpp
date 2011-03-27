@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     cin >> filename;
   }
   writeToFile(filename,mainNODE);
-  system("PAUSE");
+  //system("PAUSE");
   return 0;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -202,10 +202,8 @@ NODES *preLoad(ifstream& file,string newfile){
   
   file.open(newfile.c_str(),ios::in);
   
-  // //*** km:
-  // cout << "In preLoad after file.open()\n";
-  // cin.get();
-  
+  first->back = 0;
+  first->front = 0;
   
   while(!file.eof()){
     noLine = 0;
