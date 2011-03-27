@@ -55,31 +55,12 @@ int main(int argc, char *argv[])
   ifstream grabFile;
   bool goodFile = false;
   string filename;
-  //*** km: How about a comment here on what you're doing w/ this if..else?
-         
-  // //*** km:
-  // cout << "Before initial if\n";
-  // cin.get();
+ 
   
   if(argv[1] != 0x0){
-             
-    // //*** km:
-    // cout << "In initial if\n";
-    // cin.get();
-    
     goodFile = openFILE(grabFile,argv[1]);
-    
-    // //*** km:
-    // cout << "After goodFile: " << goodFile << "\n";
-    // cin.get();
-    
     if(goodFile){
       mainNODE = preLoad(grabFile,argv[1]);
-      
-      // //*** km:
-      // cout << "After preLoad.  mainNode = " << mainNODE << endl;
-      // cin.get();
-      
       filename = argv[1];
     }
   }
@@ -87,21 +68,14 @@ int main(int argc, char *argv[])
     mainNODE->front = 0;
     mainNODE->back = 0;  
     mainNODE = newLine(mainNODE);
-    mainNODE = newLine(mainNODE);
-    
   }
-  
-  // //*** km: 
-  // cout << "Before driveCommands()\n";
-  // cin.get();
-  
   driveCommands(mainNODE);
   if(!goodFile){
     cout << "Enter filename you wish to save as: " << endl;
     cin >> filename;
   }
   writeToFile(filename,mainNODE);
-  //system("PAUSE");
+  system("PAUSE");
   return 0;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -200,7 +174,7 @@ NODES *preLoad(ifstream& file,string newfile){
   int noLine = 0;
   
   file.open(newfile.c_str(),ios::in);
-  ///NULL front a back of list
+  ///ensure NULL front and back
   first->back = 0;
   first->front = 0;
   
@@ -302,8 +276,6 @@ void driveCommands(NODES *mainNODE){
       }
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num);
-      cout << "ENTER: to edit"<< endl;
-      cin.get();//pause before user input
       mainNODE = appendToFront(mainNODE);
       mainNODE = moveTo(mainNODE,numTwo);
     }
@@ -317,8 +289,6 @@ void driveCommands(NODES *mainNODE){
       }
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num -1);
-      cout << "ENTER: to edit" << endl;
-      cin.get();//pause before user input
       mainNODE = appendToRear(mainNODE);
       mainNODE = moveTo(mainNODE,numTwo);
     }
@@ -482,10 +452,9 @@ void display(){
 NODES *appendToFront(NODES *mainNODE){
   NODES *newNode;
   newNode = new NODES;
-  char newFront[20];
-  
-  cout << "$ " << endl;
-  cin.getline(newFront,20);
+  string newFront;
+  cout << "$";
+  getline(cin,newFront);
 
   newNode->line = newFront;
   newNode->back = 0;
@@ -510,7 +479,6 @@ NODES *appendToFront(NODES *mainNODE){
     mainNODE->front->back = newNode;
     mainNODE->front = newNode;
   }
- 
   return mainNODE;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -527,11 +495,9 @@ NODES *appendToFront(NODES *mainNODE){
 NODES *appendToRear(NODES *mainNODE){
   NODES *newNode;
   newNode = new NODES;
-
-  char newFront[20];
-  
-  cout << "$ " << endl;
-  cin.getline(newFront,20);
+  string newFront;
+  cout << "$";
+  getline(cin,newFront);
 
   newNode->line = newFront;
   newNode->back = 0;
@@ -550,6 +516,5 @@ NODES *appendToRear(NODES *mainNODE){
     mainNODE->back->front = newNode;
     mainNODE->back = newNode;
   }
-
   return mainNODE;
 }
