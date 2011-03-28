@@ -23,7 +23,7 @@ struct NODES{      //*** km: Traditional to reserve all caps words for constants
 bool openFILE(ifstream& file,string filename);
 void writeToFile(string filename,NODES *mainNODE);
 NODES *preLoad(ifstream& file,string newfile);
-NODES *newLine(NODES *mainNODE,int current);
+NODES *newLine(NODES *mainNODE);
 int locatePosition(NODES *mainNODE);
 int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current);
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
   // //*** km:
   // cout << "Before initial if\n";
   
-  mainNODE = newLine(mainNODE,0);
+  mainNODE = newLine(mainNODE);
   
   if(argv[1] != 0x0){
              
@@ -165,24 +165,17 @@ void writeToFile(string filename,NODES *mainNODE){
 ///  CALLS TO: locatePosition 
 ///  f(n) = n   
 //////////////////////////////////////////////////////////////////////////
-NODES *newLine(NODES *mainNODE,int current){
+NODES *newLine(NODES *mainNODE){
   NODES *newNODE = 0;
   newNODE = new NODES;
-  int pos = 0;
 
   newNODE->line = "\0";
   newNODE->front = 0;
   newNODE->back = 0;
  
-  if(current > 0){
-    pos = locatePosition(mainNODE);
-    if(pos > current){
-      mainNODE = mainNODE->front;
-    }
-  }
-  newNODE->back = mainNODE->back;
-  mainNODE->back = newNODE;
+  newNODE->back = 0;
   newNODE->front = mainNODE;
+  mainNODE = newNODE;
 
   return mainNODE;  
 }
@@ -455,11 +448,6 @@ NODES *deleteLines(NODES *mainNODE,int from){
   mainNODE = moveTo(mainNODE,from);
 
   if(from == 1){
-    if(mainNODE->front->front == NULL && mainNODE->back == NULL){
-      mainNODE = NULL;
-      mainNODE = new NODES;
-      newLine(mainNODE,0);
-    }
     mainNODE->front->back = mainNODE->back;
   }
   else if(mainNODE->front == NULL){
