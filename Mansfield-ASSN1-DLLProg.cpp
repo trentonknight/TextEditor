@@ -446,20 +446,32 @@ NODES *moveTo(NODES *mainNODE,int current){
 //////////////////////////////////////////////////////////////////////////
 NODES *deleteLines(NODES *mainNODE,int from){
   int where = 0;
-  where = locatePosition(mainNODE);
   mainNODE = moveTo(mainNODE,from);
+  NODES *pDEL;
+  pDEL = mainNODE;
 
-  if(from == 1){
-    mainNODE->front->back = mainNODE->back;
+  if(pDEL == 0){
+    //should never actual use this if
+    //due to previous safeguard 
+    cout << "ERROR: last line" << endl;
+    driveCommands(mainNODE);
   }
-  else if(mainNODE->front == NULL){
-    mainNODE->back->front = mainNODE->front;
+  if(pDEL->back != 0){
+    mainNODE->back = pDEL->back;
+    mainNODE->back->front = pDEL->front;
   }
   else{
-    mainNODE->front->back = mainNODE->back;
-    mainNODE->back->front = mainNODE->front;
+    mainNODE = pDEL->front;
   }
-  delete mainNODE;
+  if(pDEL->front != 0){
+    mainNODE->front = pDEL->front;
+    mainNODE->front->back = pDEL->back;
+  }
+  else{
+  mainNODE->back = pDEL->back;
+  }
+  delete pDEL;
+  ///ensure list is read in new local
   where = locatePosition(mainNODE);
   if(from != 1){
     mainNODE = moveTo(mainNODE,from -1);
