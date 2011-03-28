@@ -479,6 +479,9 @@ NODES *deleteLines(NODES *mainNODE,int from,NODES *top,NODES *bottom){
   mainNODE->back = pDEL->back;
   }
   delete pDEL;
+  top->front = 0;
+  bottom->back = 0;
+  
   ///ensure list is read in new local
   where = locatePosition(mainNODE);
   if(from != 1){
