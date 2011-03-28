@@ -52,58 +52,47 @@ int main(int argc, char *argv[])
 { 
   NODES *mainNODE;
   mainNODE = new NODES;
+  ///make node for keeping top node NULL
   NODES *top;
   top = new NODES;
+  ///make node for keeping bottom node NULL
   NODES *bottom;
   bottom = new NODES;
 
   ifstream grabFile;
+  ///used for verifing file exists
   bool goodFile = false;
   string filename;
-         //*** km: How about a comment here on what you're doing w/ this if..else?
-         
-  // //*** km:
-  // cout << "Before initial if\n";
-  
+ 
+  ///make one node and nullify top and bottom 
   mainNODE = newLine(mainNODE);
   top = mainNODE->front;
   bottom = mainNODE;
   
   if(argv[1] != 0x0){
-             
-    // //*** km:
-    // cout << "In initial if\n";
-    // cin.get();
-    
+  
+    //check if file exists, I wont use this function next time
+    //as advised.
     goodFile = openFILE(grabFile,argv[1]);
     
-    // //*** km:
-    // cout << "After goodFile: " << goodFile << "\n";
-    // cin.get();
-    
+    //if file exists then preload the entire file into linked list
     if(goodFile){
       mainNODE = preLoad(grabFile,argv[1]);
-      
-      // //*** km:
-      // cout << "After preLoad.  mainNode = " << mainNODE << endl;
-      // cin.get();
-      
+      //make string filename equal CLI 
       filename = argv[1];
     }
   }
- 
-  
-  // //*** km: 
-  // cout << "Before driveCommands()\n";
-  // cin.get();
-  
+  ///driver function that runs all other functions except
+  ///for the final write to file
   driveCommands(mainNODE,top,bottom);
+  ///request new filename since CLI was not used of filename was not valid
   if(!goodFile){
     cout << "Enter filename you wish to save as: " << endl;
     cin >> filename;
   }
+  //function which writes to file
   writeToFile(filename,mainNODE);
-  cin.get();//PAUSE
+  system("PAUSE");//windows pause
   return 0;
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -121,6 +110,7 @@ int main(int argc, char *argv[])
 bool openFILE(ifstream& file,string filename){
   bool check = false;
   file.open(filename.c_str(), ios::binary);
+  //if file exists return bool true
   if(file){
     check = true;
   }
@@ -149,6 +139,7 @@ bool openFILE(ifstream& file,string filename){
 void writeToFile(string filename,NODES *mainNODE){
   ofstream outfile;
   mainNODE = moveTo(mainNODE,1);
+  ///simple function opens file and writes list
   outfile.open(filename.c_str(), ios::binary);
   if(outfile){
     while(mainNODE->front != 0){
@@ -175,7 +166,7 @@ void writeToFile(string filename,NODES *mainNODE){
 NODES *newLine(NODES *mainNODE){
   NODES *newNODE = 0;
   newNODE = new NODES;
-
+  //simple doubly linked list
   newNODE->line = "\0";
   newNODE->front = 0;
   newNODE->back = 0;
@@ -183,6 +174,8 @@ NODES *newLine(NODES *mainNODE){
   newNODE->back = 0;
   newNODE->front = mainNODE;
   mainNODE = newNODE;
+  //once again a struggle to keep nodes
+  //null
   mainNODE->front->front = 0;
   mainNODE->front->back = 0;
   return mainNODE;  
@@ -207,13 +200,11 @@ NODES *preLoad(ifstream& file,string newfile){
   int noLine = 0;
   
   file.open(newfile.c_str(),ios::in);
+  //keeping ends null
   first->back = 0;
   first->front = 0;
-  // //*** km:
-  // cout << "In preLoad after file.open()\n";
-  // cin.get();
-  
-  
+  //while loop loads each
+  //line into a node
   while(!file.eof()){
     noLine = 0;
     getline(file,lines);
@@ -229,7 +220,7 @@ NODES *preLoad(ifstream& file,string newfile){
       newNODE->back = first->back;    //*** km: Need some comments here too.
       first->back = newNODE;
       newNODE->front = first;
-      if(newNODE->back != NULL){
+      if(newNODE->back != 0){
 	newNODE->back->front = newNODE;
       }     
       if(file.eof()){      //*** km: Here and above -- proper indenting.
@@ -260,15 +251,26 @@ void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
   int total = 0;
   int num = 0; 
   int numTwo = 0; 
-
+  
   mainNODE = moveTo(mainNODE,1);
-
+  
   while(quit){
+    //this works with GCC 4.5.1
+    //but not with GCC 3.4.2 (mingw-special)
+    //it does work fine with the latest version of
+    //mingw and its more modern compiler but not the supplied
+    //gcc for Dev-C++
+    //top and bottom should still be on correct address for top and
+    //bottom of list and NULL therefore allowing all traversing loops to
+    //do their job, namely locatePosition called in the deleteLines function
     top->front = 0;
     bottom->back = 0;
+    //printout to user
     cout << mainNODE->line << endl;
+    ///call locatePosition which simply traverses and counts
     cout << "LINE[" << locatePosition(mainNODE) <<"]";
     cout << " >> " << endl;
+    //get user selection
     cin >> input;
 
     if(input == "h" || input == "H"){
@@ -303,6 +305,7 @@ void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
       }
       while(num != numTwo){
         if(mainNODE->back == 0 && mainNODE->front->front == 0){
+          //safeguard to over user attempting to delete last node
           cout << "ERROR: no line here yet." << endl;
           driveCommands(mainNODE,top,bottom);
 	}
@@ -321,10 +324,13 @@ void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
       else{
 	cin >> num;
       }
+      //double check position
       numTwo = locatePosition(mainNODE);
+      //move to user selection
       mainNODE = moveTo(mainNODE,num);
       cout << "ENTER: to edit"<< endl;
       cin.get();//pause before user input
+      //call append function
       mainNODE = appendToFront(mainNODE,move);
       mainNODE = moveTo(mainNODE,numTwo);
     }
@@ -337,6 +343,8 @@ void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
       else{
 	cin >> num;
       }
+      //same as append above except calls 
+      //append to rear
       numTwo = locatePosition(mainNODE);
       mainNODE = moveTo(mainNODE,num -1);
       cout << "ENTER: to edit" << endl;
@@ -348,6 +356,7 @@ void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
       quit = false;
     }
     if(input == "t" || input == "T"){
+      //just calls function countTotal
       total = countTotal(mainNODE);
       cout << "TOTAL: " << total - 1 << endl; 
     }
@@ -373,6 +382,9 @@ void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
 //////////////////////////////////////////////////////////////////////////
 int locatePosition(NODES *mainNODE){
   int count = 0;
+  ///this never reaches its end due to address being lost when compiled with
+  //Dev-C++ version on GCC. Without proper addresses top and bottom nodes cannot be
+  //made null. When delete is used this function goes into infinite loop.
   while(mainNODE != 0){
     count++;
     mainNODE = mainNODE->back;
@@ -392,6 +404,7 @@ int locatePosition(NODES *mainNODE){
 //////////////////////////////////////////////////////////////////////////
 int countTotal(NODES *mainNODE){
   int count = 0;
+  //traverses up and down list to get total
   while(mainNODE->back != NULL){
     mainNODE = mainNODE->back;
   }
@@ -418,10 +431,12 @@ int countTotal(NODES *mainNODE){
 NODES *moveTo(NODES *mainNODE,int current){
   int total = countTotal(mainNODE);  
   int where = locatePosition(mainNODE);
-
+  //moves until users chosen current is reached
+  //if has safe guard to ensure user is not trying to reach something
+  //unavailable
   if(current > 0 && current < total)
     {
-      if(where > current){
+      if(where > current){//get amount needed to traverse
 	current = where - current;
 	while(current != 0){
 	  mainNODE = mainNODE->back;
@@ -430,13 +445,13 @@ NODES *moveTo(NODES *mainNODE,int current){
       }
       else{
 	current = current - where;
-	while(current != 0){
+	while(current != 0){//get amount needed to traverse
 	  mainNODE = mainNODE->front;
 	  current--;
 	}
       }     
     }
-  else{
+  else{//check unavailable
     cout << "ERROR: line does not exist." << endl;
   }
   return mainNODE;
@@ -481,13 +496,23 @@ NODES *deleteLines(NODES *mainNODE,int from,NODES *top,NODES *bottom){
   delete pDEL;
   top->front = 0;
   bottom->back = 0;
-  
-  ///ensure list is read in new local
+  ///this is where the delete function fails due to an endless amount of nodes
+  ///top and bottom should in theory be null but this does not happen on GCC
+  ///3.4.2 mingw-special for Dev-C++
+  ///However it works wonderfully using the latest real version of GCC and should look like
+  ///(gdb) print top->front
+  ///$6 = (NODES *) 0x0
+  ///(gdb) print bottom->back
+  ///$7 = (NODES *) 0x0
+  ///additionaly top and bottom should have retained their original addresses given in main
+  ///this is not happening in the Dev-C++ flavor of GCC
   where = locatePosition(mainNODE);
   if(from != 1){
+    //move to safe node
     mainNODE = moveTo(mainNODE,from -1);
   }
   else{
+    //move to safe node
     mainNODE = moveTo(mainNODE,from +1);
   }
   
@@ -524,11 +549,11 @@ NODES *appendToFront(NODES *mainNODE,bool here){
   
   cout << "$ " << endl;
   cin.getline(newFront,20);
-  
+  ///get users new line and create new node
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
-  
+  ///put new node in front of previous
   newNode->front = mainNODE->front;
   newNode->back = mainNODE;
   if(mainNODE->front != 0){
@@ -557,11 +582,11 @@ NODES *appendToRear(NODES *mainNODE,bool here){
   
   cout << "$ " << endl;
   cin.getline(newFront,20);
-
+  ///get user input for new line
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
-
+  //append behind chosen node
   if(mainNODE->back == NULL){
     newNode->back = NULL;
     newNode->front = mainNODE;
