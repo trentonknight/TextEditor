@@ -365,11 +365,11 @@ void driveCommands(NODES *mainNODE){
 //////////////////////////////////////////////////////////////////////////
 int locatePosition(NODES *mainNODE){
   int count = 0;
-  while(mainNODE->back != 0){
+  while(mainNODE != 0){
     count++;
     mainNODE = mainNODE->back;
   }
-  return count + 1;
+  return count;
 }
 ///////////////////////////////////////////////////////////////////////////
 ///  FUNCTION:	countTotal
