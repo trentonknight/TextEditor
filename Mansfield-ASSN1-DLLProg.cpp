@@ -501,14 +501,16 @@ NODES *appendToFront(NODES *mainNODE,bool here){
   
   cout << "$ " << endl;
   cin.getline(newFront,20);
-
+  
   newNode->line = newFront;
   newNode->back = 0;
   newNode->front = 0;
-
-  newNode->back = mainNODE;
+  
   newNode->front = mainNODE->front;
-  mainNODE->front->back = newNode;
+  newNode->back = mainNODE;
+  if(mainNODE->front != 0){
+    mainNODE->front->back = newNode;
+  }
   mainNODE->front = newNode;
  
   return mainNODE;
