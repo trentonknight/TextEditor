@@ -1,0 +1,477 @@
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp}{
+\section{Mansfield-\/ASSN1-\/DLLProg.cpp File Reference}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp}\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+}
+{\ttfamily \#include $<$iostream$>$}\par
+{\ttfamily \#include $<$fstream$>$}\par
+{\ttfamily \#include $<$iomanip$>$}\par
+Include dependency graph for Mansfield-\/ASSN1-\/DLLProg.cpp:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_n_o_d_e_s}{NODES}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a804cdd11c8f26f1f9da29dde3b6430c7}{openFILE} (ifstream \&file, string filename)
+\item 
+void \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a48868a5b03c344c30d31e1d3eeb3fb20}{writeToFile} (string filename, \hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE)
+\item 
+\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$ \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_acb74ac9d8a582d98c9b8e5d30e668b3b}{preLoad} (ifstream \&file, string newfile)
+\item 
+\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$ \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a067d5d7756dc9548a7abc1879667cac6}{newLine} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE)
+\item 
+int \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_ac48593b3e6a07f7ea402192ee86da930}{locatePosition} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE)
+\item 
+int \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a6bb55d1150938492268de6d1ef9e0c8a}{countTotal} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE)
+\item 
+\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$ \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a656c06175f3fa777eeb11ef4192e0ada}{moveTo} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE, int current)
+\item 
+void \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a75120516af7833473175d542cdbdd08b}{driveCommands} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE, \hyperlink{struct_n_o_d_e_s}{NODES} $\ast$top, \hyperlink{struct_n_o_d_e_s}{NODES} $\ast$bottom)
+\item 
+void \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}{display} ()
+\item 
+\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$ \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a02e3a75e02b9cef0b36bd49b1443e9a3}{deleteLines} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE, int from, \hyperlink{struct_n_o_d_e_s}{NODES} $\ast$top, \hyperlink{struct_n_o_d_e_s}{NODES} $\ast$bottom)
+\item 
+\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$ \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_aa2a740fb81a6ccda6237e73bcac6d056}{appendToFront} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE, bool here)
+\item 
+\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$ \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a8a9d6e1144ceefc651887b4463dd1b2a}{appendToRear} (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$mainNODE, bool here)
+\item 
+int \hyperlink{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_aa2a740fb81a6ccda6237e73bcac6d056}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!appendToFront@{appendToFront}}
+\index{appendToFront@{appendToFront}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{appendToFront}]{\setlength{\rightskip}{0pt plus 5cm}{\bf NODES} $\ast$ appendToFront (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE, }
+\item[{bool}]{here}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_aa2a740fb81a6ccda6237e73bcac6d056}
+FUNCTION: appendToFront DESCRIPTION: appends new NODE with user input in front of select NODE local. INPUT: Parameters: mainNODE is the current list OUTPUT: Return Val: mainNODE is returned with appened NODE CALLS TO: List of programmer-\/written functions called (names only) constant 
+
+get users new line and create new node
+
+put new node in front of previous 
+
+
+
+Definition at line 545 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=388pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_aa2a740fb81a6ccda6237e73bcac6d056_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a8a9d6e1144ceefc651887b4463dd1b2a}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!appendToRear@{appendToRear}}
+\index{appendToRear@{appendToRear}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{appendToRear}]{\setlength{\rightskip}{0pt plus 5cm}{\bf NODES} $\ast$ appendToRear (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE, }
+\item[{bool}]{here}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a8a9d6e1144ceefc651887b4463dd1b2a}
+FUNCTION: appendToRear DESCRIPTION: appends in front of NODE, more realitically it moves NODE forwards once and places new NODE in its previous local. INPUT: Parameters: mainNODE is the current list OUTPUT: Return Val: appended mainNODE CALLS TO: List of programmer-\/written functions called (names only) constant 
+
+get user input for new line 
+
+
+
+Definition at line 577 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=386pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a8a9d6e1144ceefc651887b4463dd1b2a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a6bb55d1150938492268de6d1ef9e0c8a}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!countTotal@{countTotal}}
+\index{countTotal@{countTotal}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{countTotal}]{\setlength{\rightskip}{0pt plus 5cm}int countTotal (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a6bb55d1150938492268de6d1ef9e0c8a}
+FUNCTION: countTotal DESCRIPTION: counts both forwards and backwards in list to get a total count of items in list. INPUT: Parameters: mainNODE OUTPUT: Return Val: total count of list size. Parameters: int value of traversal count. f(n) = n 
+
+Definition at line 405 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a6bb55d1150938492268de6d1ef9e0c8a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a02e3a75e02b9cef0b36bd49b1443e9a3}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!deleteLines@{deleteLines}}
+\index{deleteLines@{deleteLines}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{deleteLines}]{\setlength{\rightskip}{0pt plus 5cm}{\bf NODES} $\ast$ deleteLines (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE, }
+\item[{int}]{from, }
+\item[{{\bf NODES} $\ast$}]{top, }
+\item[{{\bf NODES} $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a02e3a75e02b9cef0b36bd49b1443e9a3}
+FUNCTION: deleteLines DESCRIPTION: deletes one or many \hyperlink{struct_n_o_d_e_s}{NODES} as requested by user INPUT: Parameters: mainNODE list from is the node location being deleted. OUTPUT: Return Val: mainNODE after select \hyperlink{struct_n_o_d_e_s}{NODES} are removed CALLS TO: moveTo, locatePosition, f(n) = n 
+
+this is where the delete function fails due to an endless amount of nodes top and bottom should in theory be null but this does not happen on GCC 3.4.2 mingw-\/special for Dev-\/C++ However it works wonderfully using the latest real version of GCC and should look like (gdb) print top-\/$>$front \$6 = (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$) 0x0 (gdb) print bottom-\/$>$back \$7 = (\hyperlink{struct_n_o_d_e_s}{NODES} $\ast$) 0x0 additionaly top and bottom should have retained their original addresses given in main this is not happening in the Dev-\/C++ flavor of GCC 
+
+
+
+Definition at line 470 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a02e3a75e02b9cef0b36bd49b1443e9a3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a02e3a75e02b9cef0b36bd49b1443e9a3_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!display@{display}}
+\index{display@{display}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}void display (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}
+FUNCTION: display DESCRIPTION: simple message for user. 
+
+Definition at line 525 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=354pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a75120516af7833473175d542cdbdd08b}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!driveCommands@{driveCommands}}
+\index{driveCommands@{driveCommands}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{driveCommands}]{\setlength{\rightskip}{0pt plus 5cm}void driveCommands (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE, }
+\item[{{\bf NODES} $\ast$}]{top, }
+\item[{{\bf NODES} $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a75120516af7833473175d542cdbdd08b}
+FUNCTION: driveCommands DESCRIPTION: core driver program that makes all calls while editing doubly linked list. INPUT: Parameters: mainNODE primary doubly linked list OUTPUT: Return Val: mainNODE is complete after user has finished all editing. CALLS TO: moveTo, locatePosition, display, deleteLines, appendToFront appendToRear, countTotal. f(n) = n(log2n) 
+
+call locatePosition which simply traverses and counts 
+
+
+
+Definition at line 247 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a75120516af7833473175d542cdbdd08b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a75120516af7833473175d542cdbdd08b_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_ac48593b3e6a07f7ea402192ee86da930}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!locatePosition@{locatePosition}}
+\index{locatePosition@{locatePosition}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{locatePosition}]{\setlength{\rightskip}{0pt plus 5cm}int locatePosition (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_ac48593b3e6a07f7ea402192ee86da930}
+FUNCTION: locatePosition DESCRIPTION: finds end of current list INPUT: Parameters: mainNODE //$\ast$$\ast$$\ast$ km: Need a brief comment on what it is. OUTPUT: Return Val: count of traversals till NULL is found Parameters: returns int count of traversals //$\ast$$\ast$$\ast$ km: count is not returned as a parameter, but as a return value. f(n) = n 
+
+this never reaches its end due to address being lost when compiled with 
+
+
+
+Definition at line 383 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_ac48593b3e6a07f7ea402192ee86da930_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!main@{main}}
+\index{main@{main}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a0ddf1224851353fc92bfbff6f499fa97}
+FUNCTION: main DESCRIPTION: takes CLI input from user and cycles through functions. INPUT: Parameters: argv\mbox{[}1\mbox{]} recieves any user input for filename File: if verified true user chooses which file to load OUTPUT: Return Val: Linked List with multiple lines of character strings //$\ast$$\ast$$\ast$ km: Return Val is 0, meaning program completed Parameters: filename or argv\mbox{[}1\mbox{]} // successfully. File: strings of characters CALLS TO: openFILE, preLoad, noFile, driveCommands, writeToFile 
+
+make node for keeping top node NULL
+
+make node for keeping bottom node NULL
+
+used for verifing file exists
+
+make one node and nullify top and bottom
+
+driver function that runs all other functions except for the final write to file
+
+request new filename since CLI was not used of filename was not valid 
+
+
+
+Definition at line 51 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a656c06175f3fa777eeb11ef4192e0ada}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!moveTo@{moveTo}}
+\index{moveTo@{moveTo}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{moveTo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf NODES} $\ast$ moveTo (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE, }
+\item[{int}]{current}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a656c06175f3fa777eeb11ef4192e0ada}
+FUNCTION: moveTo DESCRIPTION: using both function countTotal for size and locatePosition moveTo is able to identify available locations and move to or warn user that location does not exist. INPUT: Parameters: current is the interger value which represents where the user wants to access. OUTPUT: Return Val: if available mainNODE is returned with pointer moved to requested location. CALLS TO: countTotal,locatePosition,driveCommands f(n) = n 
+
+Definition at line 431 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a656c06175f3fa777eeb11ef4192e0ada_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a656c06175f3fa777eeb11ef4192e0ada_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a067d5d7756dc9548a7abc1879667cac6}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!newLine@{newLine}}
+\index{newLine@{newLine}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{newLine}]{\setlength{\rightskip}{0pt plus 5cm}{\bf NODES} $\ast$ newLine (
+\begin{DoxyParamCaption}
+\item[{{\bf NODES} $\ast$}]{mainNODE}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a067d5d7756dc9548a7abc1879667cac6}
+FUNCTION: newLine DESCRIPTION: in the event user does not enter a filname via CLI when //$\ast$$\ast$$\ast$ km: Write out cmd line interface rather than CLI starting program noFile creates enough nodes for new strings to be appended to list. This also automates any requests by user which moves pointer past available line numbers. INPUT: Parameters: empty mainNODE //$\ast$$\ast$$\ast$ km: int current is an input? OUTPUT: Return Val: mainNODE with one new NODE Parameters: mainNODE-\/$>$line = \char`\"{}$\backslash$0\char`\"{} CALLS TO: locatePosition f(n) = n 
+
+Definition at line 166 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a067d5d7756dc9548a7abc1879667cac6_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a804cdd11c8f26f1f9da29dde3b6430c7}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!openFILE@{openFILE}}
+\index{openFILE@{openFILE}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{openFILE}]{\setlength{\rightskip}{0pt plus 5cm}bool openFILE (
+\begin{DoxyParamCaption}
+\item[{ifstream \&}]{file, }
+\item[{string}]{filename}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a804cdd11c8f26f1f9da29dde3b6430c7}
+FUNCTION: openFILE DESCRIPTION: verifes file exists INPUT: Parameters: ifstream and string name of file from argv\mbox{[}1\mbox{]} File: checks to see if correct CLI filename was given. OUTPUT: Return Val: bool value Parameters: if file is found true then bool true is returned. File: user CLI input name f(n) = n 
+
+Definition at line 110 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a804cdd11c8f26f1f9da29dde3b6430c7_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_acb74ac9d8a582d98c9b8e5d30e668b3b}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!preLoad@{preLoad}}
+\index{preLoad@{preLoad}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{preLoad}]{\setlength{\rightskip}{0pt plus 5cm}{\bf NODES} $\ast$ preLoad (
+\begin{DoxyParamCaption}
+\item[{ifstream \&}]{file, }
+\item[{string}]{newfile}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_acb74ac9d8a582d98c9b8e5d30e668b3b}
+FUNCTION: preLoad DESCRIPTION: reads and parses ifstream data to doubly linked list INPUT: Parameters: ifstream file is user approved newfile which to stream data. //$\ast$$\ast$$\ast$ km: newfile? from. File: any characters from text, no validation or filtering is done. OUTPUT: Return Val: doubly linked list is returned full from file data. Parameters: \hyperlink{struct_n_o_d_e_s}{NODES} $\ast$first f(n) = n 
+
+Definition at line 195 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_acb74ac9d8a582d98c9b8e5d30e668b3b_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a48868a5b03c344c30d31e1d3eeb3fb20}{
+\index{Mansfield-\/ASSN1-\/DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}!writeToFile@{writeToFile}}
+\index{writeToFile@{writeToFile}!Mansfield-ASSN1-DLLProg.cpp@{Mansfield-\/ASSN1-\/DLLProg.cpp}}
+\subsubsection[{writeToFile}]{\setlength{\rightskip}{0pt plus 5cm}void writeToFile (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{{\bf NODES} $\ast$}]{mainNODE}
+\end{DoxyParamCaption}
+)}}
+\label{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a48868a5b03c344c30d31e1d3eeb3fb20}
+FUNCTION: writeToFile DESCRIPTION: traverses list and writes to file INPUT: Parameters: filename is the file which to write too. mainNODE is the list which is written to file File: strings of characters OUTPUT: Return Val: ofstream to file Parameters: traversed list is written to user selected file File: strings of characters per line CALLS TO: moveTo f(n) = n 
+
+simple function opens file and writes list 
+
+
+
+Definition at line 139 of file Mansfield-\/ASSN1-\/DLLProg.cpp.
+
+
+
+Here is the call graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a48868a5b03c344c30d31e1d3eeb3fb20_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{_mansfield-_a_s_s_n1-_d_l_l_prog_8cpp_a48868a5b03c344c30d31e1d3eeb3fb20_icgraph}
+\end{center}
+\end{figure}
+
+

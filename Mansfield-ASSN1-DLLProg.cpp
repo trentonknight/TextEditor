@@ -491,7 +491,7 @@ NODES *deleteLines(NODES *mainNODE,int from,NODES *top,NODES *bottom){
     mainNODE->front->back = pDEL->back;
   }
   else{
-  mainNODE->back = pDEL->back;
+    mainNODE->back = pDEL->back;
   }
   delete pDEL;
   top->front = 0;
