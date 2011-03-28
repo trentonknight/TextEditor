@@ -176,6 +176,8 @@ NODES *newLine(NODES *mainNODE){
   newNODE->back = 0;
   newNODE->front = mainNODE;
   mainNODE = newNODE;
+  mainNODE->front->front = 0;
+  mainNODE->front->back = 0;
 
   return mainNODE;  
 }
