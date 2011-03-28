@@ -27,9 +27,9 @@ NODES *newLine(NODES *mainNODE);
 int locatePosition(NODES *mainNODE);
 int countTotal(NODES *mainNODE);
 NODES *moveTo(NODES *mainNODE,int current);
-void driveCommands(NODES *mainNODE);
+void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom);
 void display();
-NODES *deleteLines(NODES *mainNODE,int from);
+NODES *deleteLines(NODES *mainNODE,int from,NODES *top,NODES *bottom);
 NODES *appendToFront(NODES *mainNODE,bool here);
 NODES *appendToRear(NODES *mainNODE,bool here);
 
@@ -52,6 +52,11 @@ int main(int argc, char *argv[])
 { 
   NODES *mainNODE;
   mainNODE = new NODES;
+  NODES *top;
+  top = new NODES;
+  NODES *bottom;
+  bottom = new NODES;
+
   ifstream grabFile;
   bool goodFile = false;
   string filename;
@@ -61,6 +66,8 @@ int main(int argc, char *argv[])
   // cout << "Before initial if\n";
   
   mainNODE = newLine(mainNODE);
+  top = mainNODE->front;
+  bottom = mainNODE;
   
   if(argv[1] != 0x0){
              
@@ -90,7 +97,7 @@ int main(int argc, char *argv[])
   // cout << "Before driveCommands()\n";
   // cin.get();
   
-  driveCommands(mainNODE);
+  driveCommands(mainNODE,top,bottom);
   if(!goodFile){
     cout << "Enter filename you wish to save as: " << endl;
     cin >> filename;
@@ -178,7 +185,6 @@ NODES *newLine(NODES *mainNODE){
   mainNODE = newNODE;
   mainNODE->front->front = 0;
   mainNODE->front->back = 0;
-
   return mainNODE;  
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -247,7 +253,7 @@ NODES *preLoad(ifstream& file,string newfile){
 ///             appendToRear, countTotal.
 ///  f(n) = n(log2n)
 //////////////////////////////////////////////////////////////////////////
-void driveCommands(NODES *mainNODE){
+void driveCommands(NODES *mainNODE,NODES *top,NODES *bottom){
   string input;
   bool quit = true;
   bool move = true;
@@ -258,6 +264,8 @@ void driveCommands(NODES *mainNODE){
   mainNODE = moveTo(mainNODE,1);
 
   while(quit){
+    top->front = 0;
+    bottom->back = 0;
     cout << mainNODE->line << endl;
     cout << "LINE[" << locatePosition(mainNODE) <<"]";
     cout << " >> " << endl;
@@ -296,10 +304,10 @@ void driveCommands(NODES *mainNODE){
       while(num != numTwo){
         if(mainNODE->back == 0 && mainNODE->front->front == 0){
           cout << "ERROR: no line here yet." << endl;
-          driveCommands(mainNODE);
+          driveCommands(mainNODE,top,bottom);
 	}
         else{
-	mainNODE = deleteLines(mainNODE,num);
+	  mainNODE = deleteLines(mainNODE,num,top,bottom);
 	}
 	num++;
       }
@@ -444,7 +452,7 @@ NODES *moveTo(NODES *mainNODE,int current){
 ///  CALLS TO: moveTo, locatePosition, 
 ///  f(n) = n
 //////////////////////////////////////////////////////////////////////////
-NODES *deleteLines(NODES *mainNODE,int from){
+NODES *deleteLines(NODES *mainNODE,int from,NODES *top,NODES *bottom){
   int where = 0;
   mainNODE = moveTo(mainNODE,from);
   NODES *pDEL;
@@ -454,7 +462,7 @@ NODES *deleteLines(NODES *mainNODE,int from){
     //should never actual use this if
     //due to previous safeguard 
     cout << "ERROR: last line" << endl;
-    driveCommands(mainNODE);
+    driveCommands(mainNODE,top,bottom);
   }
   if(pDEL->back != 0){
     mainNODE->back = pDEL->back;
