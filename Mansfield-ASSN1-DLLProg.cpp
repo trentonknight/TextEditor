@@ -365,7 +365,7 @@ void driveCommands(NODES *mainNODE){
 //////////////////////////////////////////////////////////////////////////
 int locatePosition(NODES *mainNODE){
   int count = 0;
-  while(mainNODE != NULL){
+  while(mainNODE->back != 0){
     count++;
     mainNODE = mainNODE->back;
   }
