@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
   // cout << "Before initial if\n";
   
   mainNODE = newLine(mainNODE);
+
   
   if(argv[1] != 0x0){
              
@@ -168,16 +169,26 @@ void writeToFile(string filename,NODES *mainNODE){
 NODES *newLine(NODES *mainNODE){
   NODES *newNODE = 0;
   newNODE = new NODES;
+  NODES *sec = 0;
+  sec = new NODES;
 
   newNODE->line = "\0";
   newNODE->front = 0;
   newNODE->back = 0;
- 
+  ///first node
   newNODE->back = 0;
   newNODE->front = mainNODE;
   mainNODE = newNODE;
   mainNODE->front->front = 0;
   mainNODE->front->back = 0;
+  ///append to top
+  sec->line = "\0";
+  sec->back = 0;
+  sec->front = 0;
+  //add second node to list
+  sec->front = mainNODE->front;
+  sec->back = mainNODE;
+  mainNODE->front = sec;
 
   return mainNODE;  
 }
